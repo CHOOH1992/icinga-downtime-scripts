@@ -6,7 +6,7 @@
 .EXAMPLE
     $cred = Get-Credential;
     .\icinga-downtime.ps1 -Api https://icinga.local:5665 -Credential $cred;
-    .\icinga-downtime.ps1 -SkipCertificateCheck;
+    .\icinga-downtime.ps1 
 
     .\icinga-downtime.ps1 -Duration 900;
     .\icinga-downtime.ps1 -HostName "this-windows-host.fqdn" -Author "Windows" -Comment "Automatic shutdown downtime";
@@ -36,7 +36,6 @@ param (
     [String]$Comment,
     [int]$Duration = 300,
     [String]$LogFile = "C:\Windows\Temp\icinga-downtime.log",
-    [switch]$SkipCertificateCheck,
     [switch]$Debug
 )
 
@@ -145,8 +144,7 @@ try {
         -Body $body `
         -Credential $Credential `
         -ContentType "application/json" `
-        -Headers $headers `
-        -SkipCertificateCheck:$SkipCertificateCheck;
+        -Headers $headers;
 }
 catch {
     if ($_.Exception.Response.StatusCode) {
