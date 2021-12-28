@@ -107,7 +107,9 @@ if ($HostName -eq "") {
 if (! $Author) {
     $Author = (Get-CimInstance -Class Win32_ComputerSystem).UserName;
 }
-
+if (! $Author) {
+    $Author = $env:USERNAME;
+}
 # Set comment when not passed
 if (! $Comment) {
     $Comment = "Automatic downtime initiated by " + $Author;
